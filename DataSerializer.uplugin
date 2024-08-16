@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "DataSerializer",
+	"Description": "Serialization tools for save/load system",
+	"Category": "Other",
+	"CreatedBy": "Wellsaik",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "DataSerializer",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
