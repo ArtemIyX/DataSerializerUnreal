@@ -3,6 +3,7 @@
 
 #include "Libs/DataSerializerLib.h"
 
+#include "Math/BigInt.h"
 #include "Serialization/ArchiveLoadCompressedProxy.h"
 #include "Serialization/ArchiveSaveCompressedProxy.h"
 #include "Serialization/ObjectAndNameAsStringProxyArchive.h"
@@ -146,15 +147,16 @@ bool UDataSerializerLib::SerializeObjects(TArray<uint8>& OutBytes, TArray<UObjec
 	return true;
 }
 
-bool UDataSerializerLib::DeSerializeObjects(const TArray<uint8>& InBytes, UObject* InObjectOuter, TArray<UObject*>& OutObjects)
+bool UDataSerializerLib::DeSerializeObjects(const TArray<uint8>& InBytes, UObject* InObjectOuter,
+                                            TArray<UObject*>& OutObjects)
 {
 	ensure(InBytes.Num() > 0);
-	OutObjects.Empty();	
+	OutObjects.Empty();
 	FMemoryReader reader(InBytes, true);
-	
+
 	int32 n = 0;
 	reader << n;
-	for(int32 i = 0; i < n; ++i)
+	for (int32 i = 0; i < n; ++i)
 	{
 		FSerializationHeader header;
 		header.Read(reader);
@@ -182,12 +184,28 @@ bool UDataSerializerLib::DeSerializeObjects(const TArray<uint8>& InBytes, UObjec
 		}
 	}
 
-	if(OutObjects.Num() != n)
+	if (OutObjects.Num() != n)
 	{
 		return false;
 	}
-	
+
 	return true;
+}
+
+void UDataSerializerLib::GetUtf8Bytes(const FString& InString, TArray<uint8>& OutBytes)
+{
+	// Convert FString to UTF-8 encoded string
+	FTCHARToUTF8 Utf8Converter(*InString);
+	// Resize the output array to match the size of the UTF-8 string
+	OutBytes.SetNum(Utf8Converter.Length());
+
+	// Copy the UTF-8 bytes to the output array
+	FMemory::Memcpy(OutBytes.GetData(), Utf8Converter.Get(), Utf8Converter.Length());
+}
+
+FString UDataSerializerLib::Utf8BytesToString(const TArray<uint8>& InBytes)
+{
+	return FString(FUTF8ToTCHAR(reinterpret_cast<const ANSICHAR*>(InBytes.GetData()), InBytes.Num()));
 }
 
 TArray<uint8> UDataSerializerLib::AppendBytes(const TArray<uint8>& InLeftPart, const TArray<uint8>& InRightPart)
