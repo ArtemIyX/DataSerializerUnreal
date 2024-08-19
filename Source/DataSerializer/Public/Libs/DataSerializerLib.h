@@ -15,7 +15,7 @@ constexpr int32 XEUS_SAVEGAME_FILE_TYPE_TAG = 0x78657573; //XEUS
  * including information about the type of the object being serialized.
  */
 USTRUCT(Blueprintable, BlueprintType)
-struct FSerializationHeader
+struct DATASERIALIZER_API FSerializationHeader
 {
 	GENERATED_BODY()
 
