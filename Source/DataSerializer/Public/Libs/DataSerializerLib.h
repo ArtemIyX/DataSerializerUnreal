@@ -8,20 +8,65 @@
 
 constexpr int32 XEUS_SAVEGAME_FILE_TYPE_TAG = 0x78657573; //XEUS
 
-USTRUCT()
+/**
+ * @brief Structure for handling serialization headers in any project.
+ * 
+ * This structure is used to manage the metadata required for serializing and deserializing objects,
+ * including information about the type of the object being serialized.
+ */
+USTRUCT(Blueprintable, BlueprintType)
 struct FSerializationHeader
 {
 	GENERATED_BODY()
 
 public:
+	/**
+	 * @brief Default constructor for FSerializationHeader.
+	 * 
+	 * Initializes an instance of the FSerializationHeader with default values.
+	 */
 	FSerializationHeader();
+	/**
+	 * @brief Constructor with specified object type.
+	 * 
+	 * @param ObjectType The class type of the object to be serialized.
+	 * This constructor sets the GameClassName based on the provided object type.
+	 */
 	FSerializationHeader(TSubclassOf<UObject> ObjectType);
 
+	/**
+	* @brief Resets the header to its default state.
+	* 
+	* This method clears the GameClassName and any other stateful data
+	* in the FSerializationHeader, preparing it for reuse or ensuring it is in a known clean state.
+	*/
 	void Empty();
 
+	/**
+	 * @brief Reads header data from a memory reader.
+	 * 
+	 * @param MemoryReader The memory reader from which the header data will be read.
+	 * This method populates the FSerializationHeader's members based on the data
+	 * read from the provided MemoryReader.
+	 */
 	void Read(FMemoryReader& MemoryReader);
+
+	/**
+	* @brief Writes header data to a memory writer.
+	* 
+	* @param MemoryWriter The memory writer to which the header data will be written.
+	* This method serializes the FSerializationHeader's members and writes them to the
+	* provided MemoryWriter.
+	*/
 	void Write(FMemoryWriter& MemoryWriter);
 
+	/**
+	* @brief The class name of the game object being serialized.
+	* 
+	* This string holds the class name of the UObject being serialized, which can be used to
+	* identify or reconstruct the object type during deserialization.
+	*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FString GameClassName;
 };
 
