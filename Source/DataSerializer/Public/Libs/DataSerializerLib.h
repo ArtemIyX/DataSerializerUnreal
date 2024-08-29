@@ -71,7 +71,8 @@ public:
 };
 
 /**
- * Set of functions for working with data serialization and writing them to disk
+ * @class UDataSerializerLib
+ * @brief Set of functions for working with data serialization and writing data to disk
  */
 UCLASS(Blueprintable, BlueprintType)
 class DATASERIALIZER_API UDataSerializerLib : public UBlueprintFunctionLibrary
