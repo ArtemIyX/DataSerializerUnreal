@@ -3,6 +3,10 @@
 
 #include "Utils/SerializerObject.h"
 
+USerializerObject::USerializerObject()
+{
+}
+
 FMemoryWriter& USerializerObject::GetMemoryWriterRef()
 {
 	if (!MemoryWriter.IsValid())
@@ -37,6 +41,8 @@ void USerializerObject::SerializePoint(FIntPoint InPoint) { GetMemoryWriterRef()
 void USerializerObject::SerializeRotator(FRotator InRotator) { GetMemoryWriterRef() << InRotator; }
 
 void USerializerObject::SerializeTransform(FTransform InTransform) { GetMemoryWriterRef() << InTransform; }
+
+void USerializerObject::SerializeString(FString InString) { GetMemoryWriterRef() << InString; }
 
 void USerializerObject::PushBytes(const TArray<uint8>& InBytes)
 {
