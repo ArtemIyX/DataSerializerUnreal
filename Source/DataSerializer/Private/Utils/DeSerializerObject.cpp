@@ -3,6 +3,8 @@
 
 #include "Utils/DeSerializerObject.h"
 
+#include "Libs/DataSerializerLib.h"
+
 namespace Serializer
 {
 	FMemoryReader tempReader({});
@@ -59,3 +61,15 @@ bool UDeSerializerObject::TryReadRotator(FRotator& OutRotator) { return TryReadT
 bool UDeSerializerObject::TryReadTransform(FTransform& OutTransform) { return TryReadT(OutTransform); }
 
 bool UDeSerializerObject::TryReadString(FString& OutString) { return TryReadT(OutString); }
+
+bool UDeSerializerObject::TryReadObject(UObject* InObjectOuter, UObject*& OutObject)
+{
+	FMemoryReader& memoryReader = GetMemoryReaderRef();
+	return UDataSerializerLib::DeSerializeObjectCpp(memoryReader, InObjectOuter, OutObject);
+}
+
+bool UDeSerializerObject::TryReadObjects(UObject* InObjectOuter, TArray<UObject*>& OutObjects)
+{
+	FMemoryReader& memoryReader = GetMemoryReaderRef();
+	return UDataSerializerLib::DeSerializeObjectsCpp(memoryReader, InObjectOuter, OutObjects);
+}

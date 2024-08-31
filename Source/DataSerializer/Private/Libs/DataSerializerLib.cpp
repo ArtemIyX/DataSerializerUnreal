@@ -101,8 +101,14 @@ bool UDataSerializerLib::DeserializeObject(const TArray<uint8>& InBytes, UObject
 	OutObject = nullptr;
 	FMemoryReader reader(InBytes, true);
 
+	return DeSerializeObjectCpp(reader, ObjectOuter, OutObject);
+}
+
+bool UDataSerializerLib::DeSerializeObjectCpp(FMemoryReader& InReader,
+                                              UObject* ObjectOuter, UObject*& OutObject)
+{
 	FSerializationHeader header;
-	header.Read(reader);
+	header.Read(InReader);
 
 	// Try and find it, and failing that, load it
 	UClass* gameClass = FindObject<UClass>(ANY_PACKAGE, *header.GameClassName);
@@ -116,8 +122,8 @@ bool UDataSerializerLib::DeserializeObject(const TArray<uint8>& InBytes, UObject
 	{
 		OutObject = NewObject<UObject>(ObjectOuter, gameClass);
 
-		FObjectAndNameAsStringProxyArchive Ar(reader, true);
-		OutObject->Serialize(Ar);
+		FObjectAndNameAsStringProxyArchive archive(InReader, true);
+		OutObject->Serialize(archive);
 	}
 
 	return IsValid(OutObject);
@@ -154,12 +160,18 @@ bool UDataSerializerLib::DeSerializeObjects(const TArray<uint8>& InBytes, UObjec
 	OutObjects.Empty();
 	FMemoryReader reader(InBytes, true);
 
+	return DeSerializeObjectsCpp(reader, InObjectOuter, OutObjects);
+}
+
+bool UDataSerializerLib::DeSerializeObjectsCpp(FMemoryReader& InReader,
+                                               UObject* InObjectOuter, TArray<UObject*>& OutObjects)
+{
 	int32 n = 0;
-	reader << n;
+	InReader << n;
 	for (int32 i = 0; i < n; ++i)
 	{
 		FSerializationHeader header;
-		header.Read(reader);
+		header.Read(InReader);
 
 		// Try and find it, and failing that, load it
 		UClass* gameClass = FindObject<UClass>(ANY_PACKAGE, *header.GameClassName);
@@ -174,7 +186,7 @@ bool UDataSerializerLib::DeSerializeObjects(const TArray<uint8>& InBytes, UObjec
 			UObject* resObject = nullptr;
 			resObject = NewObject<UObject>(InObjectOuter, gameClass);
 
-			FObjectAndNameAsStringProxyArchive archive(reader, true);
+			FObjectAndNameAsStringProxyArchive archive(InReader, true);
 			resObject->Serialize(archive);
 			OutObjects.Add(resObject);
 		}

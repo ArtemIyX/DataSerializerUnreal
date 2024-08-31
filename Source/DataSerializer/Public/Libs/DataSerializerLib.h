@@ -165,6 +165,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category="UDataSerializerLib|Serialization")
 	static bool DeserializeObject(const TArray<uint8>& InBytes, UObject* ObjectOuter, UObject*& OutObject);
 
+	static bool DeSerializeObjectCpp(FMemoryReader& InReader, UObject* ObjectOuter, UObject*& OutObject);
 	/**
 	 * Serializes multiple objects into a byte array.
 	 *
@@ -191,6 +192,8 @@ public:
 	 */
 	UFUNCTION(BlueprintCallable, Category="UDataSerializerLib|Serialization")
 	static bool DeSerializeObjects(const TArray<uint8>& InBytes, UObject* InObjectOuter, TArray<UObject*>& OutObjects);
+
+	static bool DeSerializeObjectsCpp(FMemoryReader& InReader, UObject* InObjectOuter, TArray<UObject*>& OutObjects);
 #pragma endregion
 
 

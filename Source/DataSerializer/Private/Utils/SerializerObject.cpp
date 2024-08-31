@@ -3,6 +3,8 @@
 
 #include "Utils/SerializerObject.h"
 
+#include "Libs/DataSerializerLib.h"
+
 USerializerObject::USerializerObject()
 {
 }
@@ -43,6 +45,22 @@ void USerializerObject::SerializeRotator(FRotator InRotator) { GetMemoryWriterRe
 void USerializerObject::SerializeTransform(FTransform InTransform) { GetMemoryWriterRef() << InTransform; }
 
 void USerializerObject::SerializeString(FString InString) { GetMemoryWriterRef() << InString; }
+
+void USerializerObject::SerializeObject(UObject* InObject)
+{
+	if (!IsValid(InObject))
+		return;
+	TArray<uint8> bytes;
+	UDataSerializerLib::SerializeObject(bytes, InObject);
+	GetMemoryWriterRef() << bytes;
+}
+
+void USerializerObject::SerializeObjects(const TArray<UObject*>& InObjects)
+{
+	TArray<uint8> bytes;
+	UDataSerializerLib::SerializeObjects(bytes, InObjects);
+	GetMemoryWriterRef() << bytes;
+}
 
 void USerializerObject::PushBytes(const TArray<uint8>& InBytes)
 {

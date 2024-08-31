@@ -189,4 +189,20 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category="USerializerObject|Serialization")
 	virtual void SerializeString(UPARAM(DisplayName="Value") FString InString);
+
+	/**
+	* @brief Serializes a object (UObject).
+	* 
+	* @param InObject The UObject to serialize.
+	*/
+	UFUNCTION(BlueprintCallable, Category="USerializerObject|Serialization")
+	virtual void SerializeObject(UPARAM(DisplayName="Value") UObject* InObject);
+
+	/**
+	* @brief Serializes a array of objects (TArray<UObject*>).
+	* 
+	* @param InObjects The Array of UObjects to serialize.
+	*/
+	UFUNCTION(BlueprintCallable, Category="USerializerObject|Serialization")
+	virtual void SerializeObjects(UPARAM(DisplayName="Value") const TArray<UObject*>& InObjects);
 };

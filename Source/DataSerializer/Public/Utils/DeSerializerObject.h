@@ -176,4 +176,23 @@ public:
 	 */
 	UFUNCTION(BlueprintCallable, Category="UDeSerializerObject|DeSerialization")
 	virtual bool TryReadString(FString& OutString);
+
+	/**
+	 * Tries to read an UObject value from the buffer.
+	 * @param InObjectOuter Object owner (must be valid)
+	 * @param OutObject UObject* variable where the read value will be stored.
+	 * @return true if the UObject* value was successfully read; false otherwise.
+	 */
+	UFUNCTION(BlueprintCallable, Category="UDeSerializerObject|DeSerialization")
+	virtual bool TryReadObject(UObject* InObjectOuter, UObject*& OutObject);
+
+	/**
+	 * Tries to read an array of UObjects from the buffer.
+	 * @param InObjectOuter Object owner (must be valid)
+	 * @param OutObjects Array variable where the read value will be stored.
+	 * @return true if the TArray<UObject*> value was successfully read; false otherwise.
+	 */
+	UFUNCTION(BlueprintCallable, Category="UDeSerializerObject|DeSerialization")
+	virtual bool TryReadObjects(UObject* InObjectOuter, TArray<UObject*>& OutObjects);
+
 };
