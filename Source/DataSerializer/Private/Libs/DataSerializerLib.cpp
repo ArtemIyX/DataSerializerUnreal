@@ -111,7 +111,7 @@ bool UDataSerializerLib::DeSerializeObjectCpp(FMemoryReader& InReader,
 	header.Read(InReader);
 
 	// Try and find it, and failing that, load it
-	UClass* gameClass = FindObject<UClass>(ANY_PACKAGE, *header.GameClassName);
+	UClass* gameClass = FindObject<UClass>(nullptr, *header.GameClassName);
 	if (gameClass == nullptr)
 	{
 		gameClass = LoadObject<UClass>(nullptr, *header.GameClassName);
@@ -174,7 +174,7 @@ bool UDataSerializerLib::DeSerializeObjectsCpp(FMemoryReader& InReader,
 		header.Read(InReader);
 
 		// Try and find it, and failing that, load it
-		UClass* gameClass = FindObject<UClass>(ANY_PACKAGE, *header.GameClassName);
+		UClass* gameClass = FindObject<UClass>(nullptr, *header.GameClassName);
 		if (gameClass == nullptr)
 		{
 			gameClass = LoadObject<UClass>(nullptr, *header.GameClassName);
