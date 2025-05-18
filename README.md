@@ -12,6 +12,7 @@ It can be used to serialize and deserialize basic data types.
 >It can be useful for serialization of complex structures like TMap.
 
 # Documentation
-Doxygen documentation: [GitHubPages](https://artemiyx.github.io/DataSerializerUnrealDoc/index.html)
+- [MkDocs](https://artemiyx.github.io/riftborn-doc/plugins/data-serializer/)
+- [Doxygen](https://artemiyx.github.io/DataSerializerUnrealDoc/index.html)
 
-Documentation sources: [GitHub](https://github.com/ArtemIyX/DataSerializerUnrealDoc)
+
